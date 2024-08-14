@@ -224,7 +224,7 @@ export function retinaWebp() {
 }
 
 export function imgCopySvg() {
-    return gulp.src(['source/img-opt/**/*.svg', 'source/img-opt/icons/*.svg'])
+    return gulp.src(['source/img-opt/**/*.svg', '!source/img-opt/icons/*.svg'])
         // .pipe(never('build/img'))  // ????????? почему не работает!
 
         // .pipe(notify('копируем svg'))

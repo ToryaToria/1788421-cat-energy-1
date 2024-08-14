@@ -71,8 +71,8 @@
   // gap: 4px;
 
   @include media-tablet {
-  gap: 1px;
-}
+    gap: 1px;
+  }
 
   @include media-desktop {
     gap: 3px;
