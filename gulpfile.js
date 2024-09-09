@@ -6,6 +6,7 @@ import htmlmin from 'gulp-htmlmin';
 import rename from 'gulp-rename';
 import cache from 'gulp-cache';
 import postcss from 'gulp-postcss';
+import postUrl from 'postcss-url';
 import autoprefixer from 'autoprefixer';
 import csso from 'postcss-csso';
 import gcssmq from 'gulp-group-css-media-queries';
@@ -54,6 +55,9 @@ export function cssMinif() {
         .pipe(plumber())
         .pipe(gcssmq()) // группирует вместе все медиавыражения и размещает их в конце файла;
         .pipe(postcss([
+            postUrl({
+              assetsPath: '../'
+            }),
             autoprefixer(), //добавляет вендорные префиксы CSS
             csso()
         ]))
@@ -157,7 +161,12 @@ export function createStack() {
         .pipe(gulp.dest('build/img/'));
 }
 
-export const imgOpt = gulp.series(imgMin, retinaWebp);
+// очистка папки img-tmp
+export const cleanImgTmp = () => {
+  return delet('source/img-tmp/');
+};
+
+export const imgOpt = gulp.series(cleanImgTmp, imgMin, retinaWebp);
 
 // Линты
 
