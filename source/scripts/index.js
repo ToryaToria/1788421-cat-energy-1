@@ -1,3 +1,3 @@
 import './menu';
 import './map';
-import './slider';
+// import './slider';
