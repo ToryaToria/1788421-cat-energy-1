@@ -4,17 +4,16 @@
 <head>
   <meta charset="utf-8">
   <title>Kat Energy * заявка</title>
-  <link rel="stylesheet" href="./css/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Заказать лучшую еду для котиков">
+  <link rel="stylesheet" href="./styles/style.css">
 
-
-  <link rel="icon" href="favicon.ico">
-  <link rel="mask-icon" href="./img/favicons/favicon-svg.svg" type="image/svg+xml" color="#5bbad5">
-  <link rel="apple-touch-icon" href="./img/favicons/apple-icon-180x180.png">
+   <link rel="icon" href="./favicon.ico">
+  <link rel="mask-icon" href="./favicons/favicon-svg.svg" type="image/svg+xml" color="#5bbad5">
+  <link rel="apple-touch-icon" href="./favicons/apple-icon-180x180.png">
   <link rel="manifest" href="./manifest.webmanifest">
 
-  <link rel="preload" href="./css/style.css" as="style">
+  <link rel="preload" href="./styles/style.css" as="style">
   <link rel="preload" href="./fonts/lato/Lato-Regular.woff2" as="font">
   <link rel="preload" href="./fonts/oswald/oswaldregular.woff2" as="font">
 
@@ -30,15 +29,15 @@
         <a class="logo-link" href="./index.html" aria-current="page">
 
           <picture>
-            <source media="(min-width:1440px)" srcset="./img/logo/logo-desk.svg" width="70" height="59">
-            <source media="(min-width:768px)" srcset="./img/logo/logo-tabl.svg" width="60" height="50">
-            <img class="logo-link__img" src="./img/logo/logo-mobile.svg" alt="логотип-картинка" width="33" height="38">
+            <source media="(min-width:1440px)" srcset="./images/logo/logo-desk.svg" width="70" height="59">
+            <source media="(min-width:768px)" srcset="./images/logo/logo-tabl.svg" width="60" height="50">
+            <img class="logo-link__img" src="./images/logo/logo-mobile.svg" alt="логотип-картинка" width="33" height="38">
           </picture>
 
           <picture class="logo-link__txt">
-            <source media="(min-width:1440px)" srcset="./img/logo/logo-text.svg" width="118" height="21">
-            <source media="(min-width:768px)" srcset="./img/logo/logo-text.svg" width="101" height="18">
-            <img src="./img/logo/logo-text-no_color.svg" alt="логотип-текст" width="101" height="19">
+            <source media="(min-width:1440px)" srcset="./images/logo/logo-text.svg" width="118" height="21">
+            <source media="(min-width:768px)" srcset="./images/logo/logo-text.svg" width="101" height="18">
+            <img src="./images/logo/logo-text-no_color.svg" alt="логотип-текст" width="101" height="19">
           </picture>
         </a>
 
@@ -238,7 +237,7 @@
         <a class="main-footer__logo" href="./index.html" aria-current="page" aria-label="логотип-картинка">
 
           <svg class="main-footer__logo-text" width="128" height="24">
-            <use href="./img/stack.svg#logo-text-no_color"></use>
+            <use href="./icons/stack.svg#logo-text-no_color"></use>
           </svg>
         </a>
 
@@ -276,9 +275,10 @@
       </div>
     </div>
   </footer>
+    <script type="module" src="./scripts/index.js"></script>
 
-  <script src="./js/app-min.js"></script>
-  <script src="./js/map-min.js"></script>
+  <!-- <script src="./js/app-min.js"></script>
+  <script src="./js/map-min.js"></script> -->
 </body>
 
 </html>

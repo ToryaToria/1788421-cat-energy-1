@@ -1,237 +1,214 @@
+import { readFileSync, rmSync } from 'node:fs';
+
 import gulp from 'gulp';
 import plumber from 'gulp-plumber';
-import sass from 'gulp-dart-sass';
-import browser from 'browser-sync';
 import htmlmin from 'gulp-htmlmin';
-import rename from 'gulp-rename';
-import cache from 'gulp-cache';
+import * as dartSass from 'sass';
+import gulpSass from 'gulp-sass';
 import postcss from 'gulp-postcss';
-import autoprefixer from 'autoprefixer';
-import csso from 'postcss-csso';
-import gcssmq from 'gulp-group-css-media-queries';
-import terser from 'gulp-terser';
+import postUrl from 'postcss-url';
+import lightningcss from 'postcss-lightningcss';
+import { createGulpEsbuild } from 'gulp-esbuild';
+import browserslistToEsbuild from 'browserslist-to-esbuild';
 import sharp from 'gulp-sharp-responsive';
+import svgo from 'gulp-svgmin';
 import { stacksvg } from 'gulp-stacksvg';
-import delet from 'del';
-import imagemin, {
-    mozjpeg,
-    optipng,
-    svgo
-} from 'gulp-imagemin';
+import server from 'browser-sync';
 import bemlinter from 'gulp-html-bemlinter';
 
-// Sass to css
+const { src, dest, watch, series, parallel } = gulp;
+const sass = gulpSass(dartSass);
+const PATH_TO_SOURCE = './source/';
+const PATH_TO_DIST = './build/';
+const PATH_TO_RAW = './raw/';
+const PATHS_TO_STATIC = [
+  `${PATH_TO_SOURCE}fonts/**/*.{woff2,woff}`,
+  `${PATH_TO_SOURCE}*.ico`,
+  `${PATH_TO_SOURCE}*.webmanifest`,
+  `${PATH_TO_SOURCE}favicons/**/*.{png,svg}`,
+  `${PATH_TO_SOURCE}vendor/**/*`,
+  `${PATH_TO_SOURCE}images/**/*`,
+  `${PATH_TO_SOURCE}video/**/*`,
+  `!${PATH_TO_SOURCE}**/README.md`,
+];
+let isDevelopment = true;
 
-export function scssToCss() { //переводит синтаксис SASS в стандартный CSS;
-    return gulp.src('source/sass/style.scss', { sourcemaps: true }) //обращается к исходному файлу style.scss;
-        .pipe(plumber())
-        .pipe(sass().on('error', sass.logError)) //показывает в терминале информацию о наличии ошибок в исходном файле;
-
-        .pipe(gulp.dest('source/css', { sourcemaps: '.' }))
-        .pipe(browser.stream())
+export function processMarkup() {
+  return src(`${PATH_TO_SOURCE}**/*.html`)
+    .pipe(htmlmin({ collapseWhitespace: !isDevelopment }))
+    .pipe(dest(PATH_TO_DIST))
+    .pipe(server.stream());
 }
 
-// =============== минимизация ============
-
-// html-MIN
-
-export function htmlMinif() {
-    return gulp.src('source/*.html')
-        .pipe(plumber())
-        .pipe(htmlmin({
-            removeComments: true,
-            collapseWhitespace: true
-        }))
-        .pipe(gulp.dest('build'))
-        .pipe(browser.stream());
+export function lintBem() {
+  return src(`${PATH_TO_SOURCE}**/*.html`)
+    .pipe(bemlinter());
 }
 
-
-// css-MIN
-
-export function cssMinif() {
-    return gulp.src('source/css/*.css', { sourcemaps: true })
-        .pipe(plumber())
-        .pipe(gcssmq()) // группирует вместе все медиавыражения и размещает их в конце файла;
-        .pipe(postcss([
-            autoprefixer(), //добавляет вендорные префиксы CSS
-            csso()
-        ]))
-
-        .pipe(gulp.dest('build/css', { sourcemaps: '.' }))  //сохраняет итоговый файл в папку /build/css/
-        .pipe(browser.stream())
+export function processStyles() {
+  return src(`${PATH_TO_SOURCE}styles/*.scss`, { sourcemaps: isDevelopment })
+    .pipe(plumber())
+    .pipe(sass().on('error', sass.logError))
+    .pipe(postcss([
+      postUrl([
+        {
+          filter: '**/*',
+          assetsPath: '../',
+        },
+        {
+          filter: '**/icons/**/*.svg',
+          url: (asset) => asset.url.replace(
+            /icons\/(.+?)\.svg$/,
+            (match, p1) => `icons/stack.svg#${p1.replace(/\//g, '_')}`
+          ),
+          multi: true,
+        },
+      ]),
+      lightningcss({
+        lightningcssOptions: {
+          minify: !isDevelopment,
+        },
+      })
+    ]))
+    .pipe(dest(`${PATH_TO_DIST}styles`, { sourcemaps: isDevelopment }))
+    .pipe(server.stream());
 }
 
-// jsMin
+export function processScripts() {
+  const gulpEsbuild = createGulpEsbuild({ incremental: isDevelopment });
 
-export function jsMinif() {
-    return gulp.src('source/js/*.js')
-        .pipe(terser())
-        .pipe(rename({
-            suffix: '-min'
-        }))
-        .pipe(gulp.dest('build/js'))
-        .pipe(browser.stream())
+  return src(`${PATH_TO_SOURCE}scripts/*.js`)
+    .pipe(gulpEsbuild({
+      bundle: true,
+      format: 'esm',
+      // splitting: true,
+      platform: 'browser',
+      minify: !isDevelopment,
+      sourcemap: isDevelopment,
+      target: browserslistToEsbuild(),
+    }))
+    .pipe(dest(`${PATH_TO_DIST}scripts`))
+    .pipe(server.stream());
 }
 
-export const minif = gulp.parallel(htmlMinif, cssMinif, jsMinif);
+export function optimizeRaster() {
+  const RAW_DENSITY = 2;
+  const TARGET_FORMATS = [undefined, 'webp']; // undefined — initial format: jpg or png
 
+  function createOptionsFormat() {
+    const formats = [];
 
-// =============== отпимизация изображений ============
+    for (const format of TARGET_FORMATS) {
+      for (let density = RAW_DENSITY; density > 0; density--) {
+        formats.push(
+          {
+            format,
+            rename: { suffix: `@${density}x` },
+            width: ({ width }) => Math.ceil(width * density / RAW_DENSITY),
+            jpegOptions: { progressive: true },
+          },
+        );
+      }
+    }
 
-// Images
+    return { formats };
+  }
 
-// оптимизация jpg, png, svg
-
-export function imgMin() {
-    return gulp.src(['source/img/**/*.{png,jpg,svg}', '!source/img/favicons'])
-
-        .pipe(cache(imagemin([
-            mozjpeg({ //для jpg
-
-                quality: 75, //Качество сжатия в диапазоне от 0 (наихудшее) до 100 (идеальное).
-                progressive: true  //прогрессивность, false создает базовый файл JPEG
-            }),
-
-            optipng({
-                optimizationLevel: 3   //уровень оптимизации от 0 до 7.
-            }
-            ),
-
-            svgo({
-                plugins: [{
-                    name: 'cleanupIDs',
-                    active: false
-                }, {
-                    name: 'preset-default', // предустановленные настройки по умолчанию
-                    params: {
-                        overrides: {
-                            // настройка параметров:
-                            convertPathData: {
-                                floatPrecision: 2,
-                                forceAbsolutePath: false,
-                                utilizeAbsolute: false,
-                            },
-                            // отключить плагин
-                            removeViewBox: false,
-                        },
-                    },
-                }]
-            })
-        ])))
-
-        .pipe(gulp.dest('source/img-tmp/'));
+  return src(`${PATH_TO_RAW}images/**/*.{png,jpg,jpeg}`)
+    .pipe(sharp(createOptionsFormat()))
+    .pipe(dest(`${PATH_TO_SOURCE}images`));
 }
 
-// ретинизация + webp +webp@2x
-
-export function retinaWebp() {
-    return gulp.src(['source/img-tmp/**/*.{png,jpg}', '!source/img-tmp/favicons'])
-
-        .pipe(sharp({
-            includeOriginalFile: true,
-            formats: [{
-                width: (metadata) => metadata.width * 2,
-                rename: {
-                    suffix: "-@2x"
-                },
-                jpegOptions: {
-                    progressive: true
-                },
-            }, {
-                width: (metadata) => metadata.width * 2,
-                format: "webp",
-                rename: {
-                    suffix: "-@2x"
-                }
-            }, {
-                format: "webp"
-            },]
-        }))
-        .pipe(gulp.dest('source/img-tmp'))
+export function optimizeVector() {
+  return src([`${PATH_TO_RAW}**/*.svg`])
+    .pipe(svgo())
+    .pipe(dest(PATH_TO_SOURCE));
 }
 
 export function createStack() {
-    return gulp.src('source/img-tmp/icons/*.svg')
-        .pipe(stacksvg(''))
-        .pipe(gulp.dest('build/img/'));
+  return src(`${PATH_TO_SOURCE}icons/**/*.svg`)
+    .pipe(stacksvg())
+    .pipe(dest(`${PATH_TO_DIST}icons`));
 }
 
-export const imgOpt = gulp.series(imgMin, retinaWebp);
+// export function copyStatic () {
+//   return src(PATHS_TO_STATIC, { base: PATH_TO_SOURCE })
+//     .pipe(dest(PATH_TO_DIST));
+// }
 
-// Линты
-
-export function lintBem() {
-    return gulp.src('source/**/*.html')
-        .pipe(bemlinter());
+export function copyStatic() {
+  return src(PATHS_TO_STATIC, { base: PATH_TO_SOURCE, encoding: false })
+    .pipe(dest(PATH_TO_DIST));
 }
 
-// конечная сборка. BUILD
+export function startServer() {
+  const serveStatic = PATHS_TO_STATIC
+    .filter((path) => path.startsWith('!') === false)
+    .map((path) => {
+      const dir = path.replace(/(\/\*\*\/.*$)|\/$/, '');
+      const route = dir.replace(PATH_TO_SOURCE, '/');
 
-// Reload
-export function reload(done) {
-    browser.reload();
-    done();
-}
-
-// Watcher
-export function watcher() {
-    gulp.watch('source/sass/**/*.scss', gulp.series(scssToCss, cssMinif));
-    gulp.watch('source/*.html', gulp.series(htmlMinif, reload));
-    gulp.watch('source/js/*.js', gulp.series(jsMinif));
-    gulp.watch('source/icons/**/*.svg', gulp.series(createStack));
-}
-
-// del
-export const clean = () => {
-    return delet('build/');
-};
-
-// copy - копирую в BUILD всё, что не изменяетя (шрифты, фавиконки)
-export function copy() {
-    return gulp.src(['source/fonts/**/*.{woff2,woff}',
-        'source/favicon.ico',
-        'source/img/favicons/**',
-        'source/manifest.webmanifest'
-    ], {
-        base: 'source'
-    }
-    )
-        .pipe(gulp.dest('build'))
-}
-
-export function copyImg() {
-    return gulp.src(['source/img-tmp/**', '!source/img-opt/icons/*.svg'])
-        .pipe(gulp.dest('build/img/'))
-}
-
-// server
-export function server(done) {
-    browser.init({ //инициализируем веб-сервер;
-        server: {
-            baseDir: './build', // указываем рабочую папку;
-            serveStaticOptions: { // упрощаем ввод в браузере адреса страницы — без расширения .html;
-                extensions: ['html'],
-            },
-        },
-        cors: true,
-        notify: false,
-        ui: false, //назначаем номер порта для пользовательского интерфейса веб-сервера;
-        open: true, //открываем в браузере главную страницу сайта.
+      return { route, dir };
     });
-    done();
+
+  server.init({
+    server: {
+      baseDir: PATH_TO_DIST
+    },
+    serveStatic,
+    cors: true,
+    notify: false,
+    ui: false,
+  }, (err, bs) => {
+    bs.addMiddleware('*', (req, res) => {
+      res.write(readFileSync(`${PATH_TO_DIST}404.html`));
+      res.end();
+    });
+  });
+
+  watch(`${PATH_TO_SOURCE}**/*.{html,njk}`, series(processMarkup));
+  watch(`${PATH_TO_SOURCE}styles/**/*.scss`, series(processStyles));
+  watch(`${PATH_TO_SOURCE}scripts/**/*.js`, series(processScripts));
+  watch(`${PATH_TO_SOURCE}icons/**/*.svg`, series(createStack, reloadServer));
+  watch(PATHS_TO_STATIC, series(reloadServer));
 }
 
-export const build = gulp.series(
-    clean,
-    copy,
-    scssToCss,
-    gulp.parallel(
-        minif, copyImg, createStack
-    )
-)
+function reloadServer(done) {
+  server.reload();
+  done();
+}
 
-export default gulp.series(
-    build,
-    server,
-    watcher)
+export function removeBuild(done) {
+  rmSync(PATH_TO_DIST, {
+    force: true,
+    recursive: true,
+  });
+  done();
+}
+
+export function buildProd(done) {
+  isDevelopment = false;
+  series(
+    removeBuild,
+    parallel(
+      processMarkup,
+      processStyles,
+      processScripts,
+      createStack,
+      copyStatic,
+    ),
+  )(done);
+}
+
+export function runDev(done) {
+  series(
+    removeBuild,
+    parallel(
+      processMarkup,
+      processStyles,
+      processScripts,
+      createStack,
+    ),
+    startServer,
+  )(done);
+}
