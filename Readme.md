@@ -8,8 +8,6 @@
 
 * Мой проект: [Кэт энерджи](https://toryatoria.github.io/1788421-cat-energy-1/)
 
-<br>
-
 ---
 
 ### Описание
