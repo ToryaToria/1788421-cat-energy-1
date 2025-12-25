@@ -5,11 +5,13 @@
 <img src="./protection.png" align="left" width="480" height="153" alt="результаты защиты проекта">
 </div>
 
+<div>
 * Студент: [Виктория Калугина](https://up.htmlacademy.ru/adaptive-individual/1/user/1788421).
 * Наставник: [Александр Зиновьев](https://htmlacademy.ru/profile/id198751)
 
 * Мой проект: [Кэт энерджи](https://toryatoria.github.io/1788421-cat-energy-1/)
 
+</div>
 <br>
 
 ---
