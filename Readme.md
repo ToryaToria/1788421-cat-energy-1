@@ -1,7 +1,7 @@
 # Учебный проект «Кэт энерджи»
-## Профессиональный онлайн‑курс HTML Academy «HTML и CSS. Адаптивная вёрстка и автоматизация»
+## Профессиональный онлайн‑курс HTML Academy «HTML и CSS. <br> Адаптивная вёрстка и автоматизация»
 
-<img src="./protection.png" align="left" width="160" height="51" alt="результаты защиты проекта" >
+<img src="./protection.png" align="left" width="240" height="102" alt="результаты защиты проекта" >
 
 * Студент: [Виктория Калугина](https://up.htmlacademy.ru/adaptive-individual/1/user/1788421).
 * Наставник: [Александр Зиновьев](https://htmlacademy.ru/profile/id198751)
