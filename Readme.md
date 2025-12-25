@@ -1,17 +1,13 @@
 # Учебный проект «Кэт энерджи»
 ## Профессиональный онлайн‑курс HTML Academy <br> «HTML и CSS. Адаптивная вёрстка и автоматизация»
 
-<div width="auto">
-<img src="./protection.png" align="left" width="480" height="153" alt="результаты защиты проекта">
-</div>
+<img src="./protection.png" width="480" height="153" alt="результаты защиты проекта"> <br>
 
-<div>
 * Студент: [Виктория Калугина](https://up.htmlacademy.ru/adaptive-individual/1/user/1788421).
 * Наставник: [Александр Зиновьев](https://htmlacademy.ru/profile/id198751)
 
 * Мой проект: [Кэт энерджи](https://toryatoria.github.io/1788421-cat-energy-1/)
 
-</div>
 <br>
 
 ---
