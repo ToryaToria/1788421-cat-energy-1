@@ -1,6 +1,6 @@
 # Учебный проект «Кэт энерджи»
 ## Профессиональный онлайн‑курс HTML Academy <br> «HTML и CSS. Адаптивная вёрстка и автоматизация»
-<img src="./protection.png" align="left" width="240" height="102" alt="результаты защиты проекта" ><br>
+<img src="./protection.png" align="left" width="480" height="1053" alt="результаты защиты проекта" ><br>
 
 <br>
 
