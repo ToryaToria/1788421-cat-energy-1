@@ -3,6 +3,7 @@
 <img src="./protection.png" align="left" width="240" height="102" alt="результаты защиты проекта" ><br>
 
 <br>
+
 * Студент: [Виктория Калугина](https://up.htmlacademy.ru/adaptive-individual/1/user/1788421).
 * Наставник: [Александр Зиновьев](https://htmlacademy.ru/profile/id198751)
 
