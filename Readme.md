@@ -2,7 +2,9 @@
 
 Репозиторий создан для обучения на профессиональном онлайн‑курсе «[HTML и CSS. Адаптивная вёрстка и автоматизация](https://htmlacademy.ru/intensive/adaptive)» от [HTML Academy](https://htmlacademy.ru).
 
-<details><summary><h3>Курс пройден в 2024 году.</h3></summary>
+Курс пройден в 2024 году.
+
+<details><summary><h4>Курс пройден в 2024 году</h4></summary>
   <img src="./protection.png" width="480" height="153" alt="результаты защиты проекта">
 </details>
 
