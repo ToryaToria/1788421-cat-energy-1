@@ -4,8 +4,7 @@
 
 Курс пройден в 2024 году.
 
-#### Защита проекта
-<details><summary><b>Развернуть</b></summary>
+<details><summary><h2>Защита проекта</h2></summary>
   <img src="./protection.png" width="480" height="153" alt="результаты защиты проекта">
 </details>
 
