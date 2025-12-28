@@ -5,7 +5,7 @@
 Репозиторий создан для обучения на профессиональном онлайн‑курсе <br>  «[HTML и CSS. Адаптивная вёрстка и автоматизация](https://htmlacademy.ru/intensive/adaptive)» от [HTML Academy](https://htmlacademy.ru).
 
 <details><summary><h4>Курс пройден в 2024 году</h4></summary>
-  <img src="./protection.png" width="480" height="153" alt="результаты защиты проекта">
+  <img src="./readme/protection.png" width="480" height="153" alt="результаты защиты проекта">
 </details>
 
 * Студент: [Виктория Калугина](https://up.htmlacademy.ru/adaptive-individual/1/user/1788421).
