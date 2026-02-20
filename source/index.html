@@ -6,14 +6,14 @@
   <title>Kat Energy</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Лучшая еда для котиков, толстых и не очень">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./styles/style.css">
 
-  <link rel="icon" href="favicon.ico">
-  <link rel="mask-icon" href="./img/favicons/favicon-svg.svg" type="image/svg+xml" color="#5bbad5">
-  <link rel="apple-touch-icon" href="./img/favicons/apple-icon-180x180.png">
+  <link rel="icon" href="./favicon.ico">
+  <link rel="mask-icon" href="./favicons/favicon-svg.svg" type="image/svg+xml" color="#5bbad5">
+  <link rel="apple-touch-icon" href="./favicons/apple-icon-180x180.png">
   <link rel="manifest" href="./manifest.webmanifest">
 
-  <link rel="preload" href="./css/style.css" as="style">
+  <link rel="preload" href="./styles/style.css" as="style">
   <link rel="preload" href="./fonts/lato/Lato-Regular.woff2" as="font">
   <link rel="preload" href="./fonts/oswald/oswaldregular.woff2" as="font">
 
@@ -29,15 +29,16 @@
         <a class="logo-link" href="./index.html" aria-current="page">
 
           <picture>
-            <source media="(min-width:1440px)" srcset="./img/logo/logo-desk.svg" width="70" height="59">
-            <source media="(min-width:768px)" srcset="./img/logo/logo-tabl.svg" width="60" height="50">
-            <img class="logo-link__img" src="./img/logo/logo-mobile.svg" alt="логотип-картинка" width="33" height="38">
+            <source media="(min-width:1440px)" srcset="./images/logo/logo-desk.svg" width="70" height="59">
+            <source media="(min-width:768px)" srcset="./images/logo/logo-tabl.svg" width="60" height="50">
+            <img class="logo-link__img" src="./images/logo/logo-mobile.svg" alt="логотип-картинка" width="33"
+              height="38">
           </picture>
 
           <picture class="logo-link__txt">
-            <source media="(min-width:1440px)" srcset="./img/logo/logo-text.svg" width="118" height="21">
-            <source media="(min-width:768px)" srcset="./img/logo/logo-text.svg" width="101" height="18">
-            <img src="./img/logo/logo-text-no_color.svg" alt="логотип-текст" width="101" height="19">
+            <source media="(min-width:1440px)" srcset="./images/logo/logo-text.svg" width="118" height="21">
+            <source media="(min-width:768px)" srcset="./images/logo/logo-text.svg" width="101" height="18">
+            <img src="./images/logo/logo-text-no_color.svg" alt="логотип-текст" width="101" height="19">
           </picture>
         </a>
 
@@ -74,22 +75,22 @@
 
         <picture class="hero__img">
 
-          <source type="image/webp" media="(min-width: 1440px)" srcset="./img/hero/hero-desk.webp 1x,
-            ./img/hero/hero-desk-@2x.webp 2x" width="552" height="499">
+          <source type="image/webp" media="(min-width: 1440px)" srcset="./images/hero/hero-desk@1x.webp 1x,
+            ./images/hero/hero-desk@2x.webp 2x" width="552" height="499">
 
-          <source type="image/webp" media="(min-width: 768px)" srcset="./img/hero/hero-tabl.webp 1x,
-            ./img/hero/hero-tabl-@2x.webp 2x" width="709" height="609">
+          <source type="image/webp" media="(min-width: 768px)" srcset="./images/hero/hero-tabl@1x.webp 1x,
+            ./images/hero/hero-tabl@2x.webp 2x" width="709" height="609">
 
-          <source type="image/webp" srcset="./img/hero/hero-mob.webp 1x,
-          ./img/hero/hero-mob-@2x.webp 2x" width="280" height="270">
+          <source type="image/webp" srcset="./images/hero/hero-mob@1x.webp 1x,
+          ./images/hero/hero-mob@2x.webp 2x" width="280" height="270">
 
-          <source type="image/png" media="(min-width:1440px)" srcset="./img/hero/hero-desk.png 1x,
-          ./img/hero/hero-desk-@2x.png 2x" width="552" height="499">
+          <source type="image/png" media="(min-width:1440px)" srcset="./images/hero/hero-desk@1x.png 1x,
+          ./images/hero/hero-desk-@2x.png 2x" width="552" height="499">
 
-          <source type="image/png" media="(min-width:768px)" srcset="./img/hero/hero-tabl.png 1x,
-          ./img/hero/hero-tabl-@2x.png 2x" width="709" height="609">
+          <source type="image/png" media="(min-width:768px)" srcset="./images/hero/hero-tabl@1x.png 1x,
+          ./images/hero/hero-tabl@2x.png 2x" width="709" height="609">
 
-          <img class="hero__img-" src="./img/hero/hero-mob.png" srcset="/img/hero/hero-mob-@2x.png 2x"
+          <img class="hero__img-" src="./images/hero/hero-mob@1x.png" srcset="/images/hero/hero-mob@2x.png 2x"
             alt="вкусная еда для котика" width="280" height="270">
         </picture>
         <a class="hero__button button-text button-text--big  button button--big" href="./form.html">
@@ -195,33 +196,32 @@
             <div class="slider">
 
               <picture class="slider__image-before- slider__image-">
-                <source type="image/webp" media="(min-width: 768px)" srcset="./img/slider/kat-fat-tabl.webp 1x,
-                                ./img/slider/kat-fat-tabl-@2x.webp 2x" width="560" height="512">
+                <source type="image/webp" media="(min-width: 768px)" srcset="./images/slider/kat-fat-tabl@1x.webp 1x,
+                                ./images/slider/kat-fat-tabl@2x.webp 2x" width="560" height="512">
 
-                <source type="image/webp" srcset="./img/slider/kat-fat-mob.webp 1x,
-              ./img/slider/kat-fat-mob-@2x.webp 2x" width="280" height="256">
+                <source type="image/webp" srcset="./images/slider/kat-fat-mob@1x.webp 1x,
+              ./images/slider/kat-fat-mob@2x.webp 2x" width="280" height="256">
 
 
-                <source class="slider__image-before- slider__image-" type="image/png" media="(min-width:768px)" srcset="./img/slider/kat-fat-tabl.png 1x,
-                  ./img/slider/kat-fat-tabl-@2x.png 2x" width="560" height="512">
+                <source class="slider__image-before- slider__image-" type="image/png" media="(min-width:768px)" srcset="./images/slider/kat-fat-tabl@1x.png 1x,
+                  ./images/slider/kat-fat-tabl@2x.png 2x" width="560" height="512">
 
-                <img class="slider__image-before slider__image" src="./img/slider/kat-fat-mob.png"
-                  srcset="./img/slider/kat-fat-mob-@2x.png 2x" alt="толстый кот" width="280" height="256">
+                <img class="slider__image-before slider__image" src="./images/slider/kat-fat-mob@1x.png"
+                  srcset="./images/slider/kat-fat-mob@2x.png 2x" alt="толстый кот" width="280" height="256">
               </picture>
 
               <picture class="slider__image-after- slider__image">
-                <source type="image/webp" media="(min-width: 768px)" srcset="./img/slider/kat-slim-tabl.webp 1x,
-                ./img/slider/kat-slim-tabl-@2x.webp 2x" width="560" height="512">
+                <source type="image/webp" media="(min-width: 768px)" srcset="./images/slider/kat-slim-tabl@1x.webp 1x,
+                ./images/slider/kat-slim-tabl@2x.webp 2x" width="560" height="512">
 
-                <source type="image/webp" srcset="./img/slider/kat-slim-mob.webp 1x,
-                ./img/slider/kat-slim-mob-@2x.webp 2x" width="280" height="256">
+                <source type="image/webp" srcset="./images/slider/kat-slim-mob@1x.webp 1x,
+                ./images/slider/kat-slim-mob@2x.webp 2x" width="280" height="256">
 
-                <source class="slider__image-after- slider__image-" type="image/png" media="(min-width:768px)"
-                  srcset="./img/slider/kat-slim-tabl.png 1x, ./img/slider/kat-slim-tabl-@2x.png 2x" width="560"
-                  height="512">
+                <source type="image/png" media="(min-width:768px)" srcset="./images/slider/kat-slim-tabl@1x.png 1x,
+                ./images/slider/kat-slim-tabl@2x.png 2x" width="560" height="512">
 
-                <img class="slider__image-after slider__image-" src="./img/slider/kat-slim-mob.png"
-                  srcset="./img/slider/kat-slim-mob-@2x.png 2x" alt="отощал, бедняжка" width="280" height="256">
+                <img class="slider__image-after slider__image-" src="./images/slider/kat-slim-mob@1x.png"
+                  srcset="./images/slider/kat-slim-mob@2x.png 2x" alt="отощал, бедняжка" width="280" height="256">
               </picture>
 
               <input class="slider__range" type="range" min="0" max="100" value="50"
@@ -266,7 +266,7 @@
         <a class="main-footer__logo" href="./index.html" aria-current="page" aria-label="логотип-картинка">
 
           <svg class="main-footer__logo-text" width="128" height="24">
-            <use href="./img/stack.svg#logo-text-no_color"></use>
+            <use href="./icons/stack.svg#logo-text-no_color"></use>
           </svg>
         </a>
 
@@ -305,9 +305,8 @@
     </div>
   </footer>
 
-  <script src="./js/app-min.js"></script>
-  <script src="./js/map-min.js"></script>
-  <script src="./js/slider-min.js"></script>
+  <script type="module" src="./scripts/index.js"></script>
+  <script src="./scripts/slider.js"></script>
 
 </body>
 

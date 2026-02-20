@@ -1,0 +1,202 @@
+.icon {
+  overflow: visible;
+
+  @include icon;
+
+  &::before {
+    content: "";
+
+    @include icon;
+  }
+
+  &::after {
+    content: "";
+
+    @include icon;
+  }
+}
+
+.icon--round::before {
+  background-color: $color-bg-base;
+  border-radius: 50%;
+
+  width: 50px;
+  height: 50px;
+
+  flex-shrink: 0;
+
+  @include media-tablet {
+    width: 200px;
+    height: 200px;
+  }
+
+  @include media-desktop {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.icon--square::before {
+  width: 60px;
+  height: 60px;
+  background-color: $color-bg-base;
+  box-sizing: border-box;
+  flex-shrink: 0;
+
+  @include media-tablet {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.icon--slim::after,
+.icon--fat::after {
+  width: 67px;
+  height: 50px;
+  background-position: center;
+
+  @include media-tablet {
+    width: 268px;
+    height: 194px;
+  }
+
+  @include media-desktop {
+    width: 134px;
+    height: 97px;
+  }
+}
+
+.icon--slim::after {
+
+  position: absolute;
+  top: -3px;
+  left: -9px;
+
+  background-size: 36px 50px;
+  background-image: url("../../icons/stack.svg#cat-slim");
+
+  @include media-tablet {
+    background-size: 140px 194px;
+
+    top: 4px;
+    right: -287px;
+    left: auto;
+  }
+
+  @include media-desktop {
+    background-size: 70px 97px;
+    top: -6px;
+    right: 340px;
+  }
+}
+
+.icon--fat::after {
+
+  position: absolute;
+  top: 0;
+  left: -9px;
+
+  background-image: url("../../icons/stack.svg#cat-pro");
+
+  @include media-tablet {
+    top: 16px;
+    right: -287px;
+    left: auto;
+  }
+
+  @include media-desktop {
+    top: 0;
+    right: 342px;
+  }
+}
+
+.icon--leaf::before {
+  background-size: 30px 32px;
+  background-image: url("../../icons/stack.svg#icon_leaf");
+}
+
+.icon--bowl::before {
+  background-size: 26px 29px;
+  background-image: url("../../icons/stack.svg#icon-bowl");
+}
+
+.icon--eat::before {
+  background-size: 26px 30px;
+  background-image: url("../../icons/stack.svg#icon_eat");
+}
+
+.icon--time::before {
+  background-size: 26px 31px;
+  background-image: url("../../icons/stack.svg#icon-time");
+}
+
+.icon--arrow::after {
+  width: 32px;
+  height: 12px;
+  background-image: url("../../icons/stack.svg#icon_arrow-32px");
+  background-position: -8px;
+  transition: background-position 0.3s ease-in-out;
+
+  flex-shrink: 0;
+}
+
+.icon--arrow:hover::after {
+  background-position: 0;
+}
+
+.icon--social {
+  display: block;
+  width: 28px;
+  height: 22px;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 28px;
+    height: 22px;
+
+    background-color: $color-footer-icons;
+
+    mask-repeat: no-repeat;
+    mask-size: 28px 22px;
+    mask-position: center;
+  }
+}
+
+.icon--vk::before {
+  mask-image: url("../../icons/stack.svg#vkontakte");
+}
+
+.icon--youtube::before {
+  mask-image: url("../../icons/stack.svg#youtube");
+}
+
+.icon--telegramm::before {
+  mask-image: url("../../icons/stack.svg#telegram");
+}
+
+.icon--email::before,
+.icon--phone::before {
+  content: none;
+}
+
+.icon--email::after {
+  mask-image: url("../../icons/stack.svg#icon-email");
+  background-color: $color-black;
+}
+
+.icon--phone::after {
+  background-color: $color-black;
+  mask-image: url("../../icons/stack.svg#icon-phone");
+}
+
+.icon__energy-color {
+  @include media-tablet {
+    fill: #444444;
+  }
+}
+
+.icon__htmlacademy-logo {
+  fill: $color-footer-icons;
+  transition: background-color 0.3s ease-in-out;
+}
